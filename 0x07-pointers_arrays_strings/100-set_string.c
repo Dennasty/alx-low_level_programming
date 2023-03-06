@@ -1,26 +1,16 @@
-#include <stdio.h>
+/*
+* File: 100-set_string.c
+* Auth: EASY
+*/
+
 #include "main.h"
 
 /**
- * print_diagsums - prints the sum of the two diagonals
- * of a square matrix of integers
- * @a: square matrix of which we print the sum of diagonals
- * @size: size of the matrix
+ * set_string - Sets the value of a pointer to a char.
+ * @s: The pointer.
+ * @to: To the char.
  */
-void print_diagsums(int *a, int size)
+void set_string(char **s, char *to)
 {
-	int i;
-
-	unsigned int sum, sum1;
-
-	sum = 0;
-	sum1 = 0;
-
-	for (i = 0; i < size; i++)
-	{
-		sum += a[(size * i) + i];
-		sum1 += a[(size * (i + 1)) - (i + 1)];
-	}
-
-	printf("%d, %d\n", sum, sum1);
+		*s = to;
 }
