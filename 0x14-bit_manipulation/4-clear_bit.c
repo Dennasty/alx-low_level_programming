@@ -10,7 +10,7 @@
  * Return: 1 if successful, or -1 if an error occurred.
  */
 
-int bitclear_bit(unsigned long int *n, unsigned int index)
+int clear_bit(unsigned long int *n, unsigned int index)
 {
 	unsigned long int amsk;
 
