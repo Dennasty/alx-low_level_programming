@@ -1,40 +1,40 @@
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
 #include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
+#include <fcntl.h>
 
-int append_text_to_file(const char *filename, char *text_content)
+/**
+ * append_text_to_file - Appends text at the end of a file.
+ * @filename: The name of the file.
+ * @text_content: The string to add to the end of the file.
+ *
+ * Return: If the function fails -1, otherwise 1.
+ */
+int append_text_to_file(const char *filename, const char *text_content)
 {
-	int fd;
-	ssize_t bytes_written;
-	off_t offset;
+	int file_descriptor, bytes_written, text_length = 0;
 
 	if (filename == NULL)
 		return (-1);
 
-	fd = open(filename, O_WRONLY | O_APPEND);
-	if (fd == -1)
-		return (-1);
-
 	if (text_content != NULL)
 	{
-		offset = lseek(fd, 0, SEEK_END);
-		if (offset == -1)
-		{
-			close(fd);
-			return (-1);
-		}
-
-		bytes_written = write(fd, text_content, strlen(text_content));
-		if (bytes_written == -1)
-		{
-			close(fd);
-			return (-1);
-		}
+		while (text_content[text_length])
+			text_length++;
 	}
 
-	close(fd);
+	file_descriptor = open(filename, O_WRONLY | O_APPEND);
+
+	if (file_descriptor == -1)
+		return (-1);
+
+	bytes_written = write(file_descriptor, text_content, text_length);
+
+	if (bytes_written == -1 || bytes_written != text_length)
+	{
+		close(file_descriptor);
+		return (-1);
+	}
+
+	close(file_descriptor);
 	return (1);
 }
+
